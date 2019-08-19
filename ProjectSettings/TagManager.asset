@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Game
+  - Slider
+  - Slider2
+  - Inimigo
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: ninja
+    uniqueID: 3578030467
+    locked: 0
+  - name: cavaleiro
+    uniqueID: 2866931607
+    locked: 0
+  - name: Shuriken
+    uniqueID: 4161001975
+    locked: 0
+  - name: Espada
+    uniqueID: 3794761435
+    locked: 0
+  - name: Inimigo Dinossauro
+    uniqueID: 1978565651
+    locked: 0
+  - name: Inimigo Robo
+    uniqueID: 1527370079
+    locked: 0
+  - name: Inimigo Abobora
+    uniqueID: 2533047281
+    locked: 0
+  - name: Inimigo Zumbi
+    uniqueID: 3035697441
+    locked: 0
