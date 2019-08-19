@@ -7,10 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    Slider2 sliderHp2;
 
-    [SerializeField]
+    
     private float InvencibilidadeInicial;
 
     [SerializeField]
@@ -23,26 +21,20 @@ public class Player : MonoBehaviour
     private float tempoFinalCura;
 
     [SerializeField]
-    private float taxaDeCura=0.5f;
+    private int taxaDeCura = 1;
 
 
     [SerializeField]
-    private float distanciaShurikenPlayer;
+    private float distanciaProjetilPlayer;
+
+
+   
+    private float spawnarProjetilInicial;
 
     [SerializeField]
-    private float distanciaEspadaPlayer;
+    private float spawnarProjetilnMax;
 
-    [SerializeField]
-    private float spawnarShurikenInicial;
 
-    [SerializeField]
-    private float spawnarShurikenMax;
-
-    [SerializeField]
-    private float spawnarEspadaInicial;
-
-    [SerializeField]
-    private float spawnarEspadaMax;
 
     [SerializeField]
     Animator ani;
@@ -52,7 +44,7 @@ public class Player : MonoBehaviour
 
     Game game_ref;
 
-    [SerializeField]
+
     private float invencibilidadeInicio;
 
     [SerializeField]
@@ -61,30 +53,29 @@ public class Player : MonoBehaviour
     [SerializeField]
     bool recarregar = false;
 
-    [SerializeField]
-    bool recarregar2 = false;
 
-    
+    [SerializeField]
     bool isPlayer1;
 
     [SerializeField]
     private float speed;
 
-    public GameObject shurikenPrefab;
-    public GameObject espadaPrefab;
+    [SerializeField]
+    private int hpInicial;
+
+    public GameObject projetilPrefab;
 
     private bool invencivel = false;
 
-    [SerializeField]
-    private int hpInicial = 1;
 
     [SerializeField]
-    private int HPMax;
-    
+    private int HPMax = 50;
+
     [SerializeField]
     Slider sliderHp;
-    
-    private int _hp;
+
+    [SerializeField]
+    private int _hp = 50;
     public int Hp
     {
         get
@@ -93,60 +84,37 @@ public class Player : MonoBehaviour
         }
         set
         {
-            if (value <= 0)
+            _hp = value;
+            if (_hp <= 0)
             {
-                _hp = 0;
+
+                print("morreu");
+                if (sliderHp && sliderHp !=null)//aqui garante q não tem referencias ainda?
                 sliderHp.value = 0;
+
+                _hp = 0;
                 Destroy(gameObject);
                 Morrer();
 
             }
-            else if (value >= HPMax)
+            else if (_hp >= HPMax)
             {
                 _hp = HPMax;
-                sliderHp.value = 1;
+                if(sliderHp && sliderHp != null)
+                    sliderHp.value = 1;
             }
             else
             {
-                _hp = value;
-                sliderHp.value = (float)_hp / (float)HPMax;
+               
+                if(sliderHp && sliderHp != null)
+                    sliderHp.value = (float)_hp / (float)HPMax;
             }
         }
     }
-    [SerializeField]
-    private int HPMax2;
 
-    
 
-    private int _hp2;
-    public int Hp2
-    {
-        get
-        {
-            return _hp2;
-        }
-        set
-        {
-            if (value <= 0)
-            {
-                _hp2 = 0;
-                sliderHp2.value = 0;
-                Destroy(gameObject);
-                Morrer();
 
-            }
-            else if (value >= HPMax2)
-            {
-                _hp2 = HPMax2;
-                sliderHp2.value = 1;
-            }
-            else
-            {
-                _hp2 = value;
-                sliderHp2.value = _hp2 /HPMax2;
-            }
-        }
-    }
+
 
 
 
@@ -160,17 +128,20 @@ public class Player : MonoBehaviour
     void Start()
     {
         if (!game_ref || game_ref == null)
-        game_ref = GameObject.FindGameObjectWithTag("Game").GetComponent<Game>();
+            game_ref = GameObject.FindGameObjectWithTag("Game").GetComponent<Game>();
 
         if (!body || body == null)
-        body = GetComponent<Rigidbody2D>();
+            body = GetComponent<Rigidbody2D>();
 
         if (!ani || ani == null)
-        ani = GetComponent<Animator>();   
-           
+            ani = GetComponent<Animator>();
 
-        Hp = HPMax;
-        Hp2 = HPMax2;
+
+        if (sliderHp && sliderHp != null)
+            sliderHp.value = 1;
+
+            Hp = 50;
+       
     }
 
     // Update is called once per frame
@@ -178,28 +149,30 @@ public class Player : MonoBehaviour
     {
         Movimento();
 
-        if(recarregar==false && Input.GetKeyDown(KeyCode.T) && game_ref.isGameOver() == false)
+        if(isPlayer1)
         {
-            SpawnarShuriken(distanciaShurikenPlayer);
-            recarregar = true;
-            spawnarShurikenInicial = Time.time;
+            if (recarregar == false && Input.GetKeyDown(KeyCode.T) && game_ref.isGameOver() == false)
+            {
+                SpawnarProjetil(distanciaProjetilPlayer);
+                recarregar = true;
+                spawnarProjetilInicial = Time.time;
+            }
         }
+        else
+        {
+            if (recarregar == false && Input.GetKeyDown(KeyCode.Keypad7) && game_ref.isGameOver() == false)
+            {
+                SpawnarProjetil(distanciaProjetilPlayer);
+                recarregar = true;
+                spawnarProjetilInicial = Time.time;
+            }
+        }
+       
 
 
-        if (Time.time >= spawnarShurikenInicial + spawnarShurikenMax && recarregar==true)
+        if (Time.time >= spawnarProjetilInicial + spawnarProjetilnMax && recarregar == true)
         {
             recarregar = false;
-        }
-
-        if(recarregar2==false && Input.GetKeyDown(KeyCode.P) && game_ref.isGameOver() == false)
-        {
-            recarregar2 = true;
-            SpawnarEspada(distanciaEspadaPlayer);
-            spawnarEspadaInicial = Time.time;
-        }
-        if(Time.time>=spawnarEspadaInicial+spawnarEspadaMax && recarregar2 == true)
-        {
-            recarregar2 = false;
         }
 
 
@@ -224,13 +197,13 @@ public class Player : MonoBehaviour
     {
         Vector2 input;
 
-        if(isPlayer1)
+        if (isPlayer1)
         {
             input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         }
         else
         {
-            input=new Vector2(Input.GetAxisRaw("Horizontal2"), Input.GetAxisRaw("Vertical2"));
+            input = new Vector2(Input.GetAxisRaw("Horizontal2"), Input.GetAxisRaw("Vertical2"));
         }
 
         Vector2 direction = input.normalized;
@@ -241,34 +214,27 @@ public class Player : MonoBehaviour
     }
     public void Morrer()
     {
+        if(Hp <= 0)
         game_ref.GameOver();
-        print("morreu");
+     
     }
-    
 
 
 
 
-    public void SpawnarShuriken(float distanciaShurikenPlayer)
+
+    public void SpawnarProjetil(float distanciaShurikenPlayer)
     {
         Vector3 posicaoInicial = transform.position;
         Vector3 position = posicaoInicial;
         position.x += distanciaShurikenPlayer;
         position.z = -1f;
 
-        GameObject fit = Instantiate(shurikenPrefab, transform.position, Quaternion.identity);
+        GameObject fit = Instantiate(projetilPrefab, transform.position, Quaternion.identity);
     }
-    
 
-    public void SpawnarEspada(float distanciaEspadaPlayer)
-    {
-        Vector3 inipos = transform.position;
-        Vector3 position = inipos;
-        position.x = distanciaEspadaPlayer;
-        position.z = -1f;
 
-        GameObject rit = Instantiate(espadaPrefab, position, Quaternion.identity);
-    }
+
     public void TomarDano(int dano)
     {
         Hp -= dano;
@@ -276,7 +242,7 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (collision.CompareTag("inimigo"))
+        if (collision.CompareTag("Inimigo"))
         {
             if (!invencivel)
                 collision.GetComponent<Inimigo>().CausarDano(this);
@@ -302,7 +268,4 @@ public class Player : MonoBehaviour
 
     }
 
-    internal class Slider2
-{
-    internal int value;
 }

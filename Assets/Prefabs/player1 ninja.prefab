@@ -92,12 +92,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6513b2d7ff364494cab7021a4cc08085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  invencibilidadeInicio: 0
+  InvenciblilidadeMax: 0
+  tempoInicialCura: 0
+  tempoFinalCura: 0
+  taxaDeCura: 0.5
+  distanciaProjetilPlayer: 0
+  spawnarProjetilnMax: 0
+  ani: {fileID: 0}
+  body: {fileID: 0}
   invencibilidadeMax: 0
-  isPlayer1: 1
+  recarregar: 0
+  isPlayer1: 0
   speed: 0
-  shurikenPrefab: {fileID: 0}
-  espadaprefab: {fileID: 0}
-  HPMax: 0
+  projetilPrefab: {fileID: 0}
+  HPMax: 50
   sliderHp: {fileID: 0}
-  HPMax2: 0
+  _hp: 50

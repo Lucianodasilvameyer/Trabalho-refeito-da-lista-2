@@ -8,6 +8,8 @@ TagManager:
   - Slider
   - Slider2
   - Inimigo
+  - CapaDeInvencibilidade
+  - Projetil
   layers:
   - Default
   - TransparentFX

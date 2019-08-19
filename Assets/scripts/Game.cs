@@ -8,38 +8,32 @@ using System.Linq;
 
 public class Game : MonoBehaviour
 {
-    [SerializeField]
+
     private float spawnarDinossauroInicial;
     [SerializeField]
     private float spawnarDinossauroMax;
 
-    [SerializeField]
+
     private float spawnarAboboraInicial;
     [SerializeField]
     private float spawnarAboboraMax;
 
-    [SerializeField]
+
     private float spawnarZumbiInicial;
     [SerializeField]
     private float spawnarZumbiMax;
 
-    [SerializeField]
+
     private float spawnarRoboInicial;
     [SerializeField]
     private float spawnarRoboMax;
 
 
     [SerializeField]
-    private int distanciaInimigoPlayer;
+    private float distanciaInimigoPlayer;
 
-    [SerializeField]
-    private int distanciaInimigoPlayer2;
 
-    [SerializeField]
-    private int distanciaInimigoPlayer3;
 
-    [SerializeField]
-    private int distanciaInimigoPlayer4;
 
     public GameObject InimigoDinossauroPrefab;
     public GameObject InimigoAboboraPrefab;
@@ -67,8 +61,9 @@ public class Game : MonoBehaviour
 
     bool gameOver = false;
 
-    Player player_ref;
-    Inimigo ini;
+    [SerializeField]
+    Player[] players;
+
    
     public float Score
     {
@@ -118,9 +113,15 @@ public class Game : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!ini || ini == null)
-        ini = GameObject.FindGameObjectWithTag("Inimigo").GetComponent<Inimigo>();    
+       
 
+        GameObject[] playerGO = GameObject.FindGameObjectsWithTag("Player");
+        players = new Player[playerGO.Length];
+        for (int i = 0; i < playerGO.Length; i++)
+        {
+            players[i] = playerGO[i].GetComponent<Player>();
+        }
+        
         Score = 0;
         Score2 = 0;
 
@@ -129,36 +130,34 @@ public class Game : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.time>=pontuacaoInicio+pontuacaoMax && isplayer1==true)
+        if(Time.time>=pontuacaoInicio+pontuacaoMax)
         {
             pontuacaoInicio = Time.time;
             Score += taxaDePontos;
-        }
-        else
-        {
-            pontuacaoInicio = Time.time;
             Score2 += taxaDePontos;
         }
+        
 
         if (Time.time >= spawnarDinossauroInicial + spawnarDinossauroMax)
         {
             spawnarDinossauroInicial = Time.time;
-            SpawnarInimigo<Dinossauro>(distanciaInimigoPlayer);
+          
+            SpawnarInimigo<Dinossauro>(distanciaInimigoPlayer, Random.Range(0, players.Length ));
         }
         if (Time.time>= spawnarAboboraInicial + spawnarAboboraMax)
         {
             spawnarAboboraInicial = Time.time;
-            SpawnarInimigo<Abobora>(distanciaInimigoPlayer2);
+            SpawnarInimigo<Abobora>(distanciaInimigoPlayer, Random.Range(0, players.Length));
         }
         if (Time.time >= spawnarZumbiInicial + spawnarZumbiMax)
         {
             spawnarZumbiInicial = Time.time;
-            SpawnarInimigo<Zumbi>(distanciaInimigoPlayer3);
+            SpawnarInimigo<Zumbi>(distanciaInimigoPlayer, Random.Range(0, players.Length));
         }
         if(Time.time >= spawnarRoboInicial+ spawnarRoboMax)
         {
             spawnarRoboInicial = Time.time;
-            SpawnarInimigo<Robo>(distanciaInimigoPlayer4);
+            SpawnarInimigo<Robo>(distanciaInimigoPlayer,Random.Range(0, players.Length));
         }
 
     }
@@ -170,27 +169,31 @@ public class Game : MonoBehaviour
     {
         return gameOver;
     }
-    public void SpawnarInimigo<Y>(int distanciaInimigoPlayer)
+    public void SpawnarInimigo<Y>(float distanciaInimigoPlayer, int indexPlayer)
     {
-        if (!typeof(Y).IsSubclassOf(typeof(Inimigo)))
+        if (!typeof(Y).IsSubclassOf(typeof(Inimigo)) || (indexPlayer < 0 || indexPlayer >= players.Length))
             return;
-        Vector3 iniPos = player_ref.transform.position;
+
+   
+        Vector3 iniPos = players[indexPlayer].transform.position;
         Vector3 position = iniPos;
-        position.x = distanciaInimigoPlayer;
-        position.y = distanciaInimigoPlayer;
+        position.x += distanciaInimigoPlayer;
+        position.y += distanciaInimigoPlayer;
         position.z = -1f;
 
         if (listaInimigos.Count > 0)
         {
             if (typeof(Y) == typeof(Dinossauro))
             {
-                if(listaInimigos.OfType<Dinossauro>().Any())
+                if (listaInimigos.OfType<Dinossauro>().Any())
                 {
                     int index = listaInimigos.FindLastIndex(x => x.GetType() == typeof(Dinossauro));
                     listaInimigos.RemoveAt(index);
                     Dinossauro D = (Dinossauro)listaInimigos[index];
+                   
+                   
                     D.transform.position = position;
-                    D.gameObject.SetActive(true);
+                    D.SetActive(true);
                 }
             }
             else if (typeof(Y) == typeof(Robo))
@@ -200,8 +203,10 @@ public class Game : MonoBehaviour
                     int index = listaInimigos.FindLastIndex(x => x.GetType() == typeof(Robo));
                     listaInimigos.RemoveAt(index);
                     Robo D = (Robo)listaInimigos[index];
+                    position.x += D.distanciaPlayer;
+                    position.y += D.distanciaPlayer;
                     D.transform.position = position;
-                    D.gameObject.SetActive(true);
+                    D.SetActive(true);
                 }
             }
             else if (typeof(Y) == typeof(Zumbi))
@@ -211,8 +216,10 @@ public class Game : MonoBehaviour
                     int index = listaInimigos.FindLastIndex(x => x.GetType() == typeof(Zumbi));
                     listaInimigos.RemoveAt(index);
                     Zumbi D = (Zumbi)listaInimigos[index];
+                    position.x += D.distanciaPlayer;
+                    position.y += D.distanciaPlayer;
                     D.transform.position = position;
-                    D.gameObject.SetActive(true);
+                    D.SetActive(true);
                 }
             }
             else if (typeof(Y) == typeof(Abobora))
@@ -222,43 +229,60 @@ public class Game : MonoBehaviour
                     int index = listaInimigos.FindLastIndex(x => x.GetType() == typeof(Abobora));
                     listaInimigos.RemoveAt(index);
                     Abobora D = (Abobora)listaInimigos[index];
+                    position.x += D.distanciaPlayer;
+                    position.y += D.distanciaPlayer;
                     D.transform.position = position;
-                    D.gameObject.SetActive(true);
+                    D.SetActive(true);
                 }
             }
-            else
-            {
-                if (typeof(Y) == typeof(Dinossauro))
-                {
-                    Instantiate(InimigoDinossauroPrefab, position, Quaternion.identity);
-                }
-                if (typeof(Y) == typeof(Robo))
-                {
-                    Instantiate(InimigoRoboPrefab, position, Quaternion.identity);
-                }
-                if (typeof(Y) == typeof(Zumbi))
-                {
-                    Instantiate(InimigoZumbiPrefab, position, Quaternion.identity);
-                }
-                if (typeof(Y) == typeof(Abobora))
-                {
-                    Instantiate(InimigoAboboraPrefab, position, Quaternion.identity);
-                }
-            }
-            
         }
+        else
+        {
+           
+            if (typeof(Y) == typeof(Dinossauro))
+            {
+                
+
+                Dinossauro inimigo = Instantiate(InimigoDinossauroPrefab, position, Quaternion.identity).GetComponent<Dinossauro>();
+                //inimigo.init();
+            }
+            if (typeof(Y) == typeof(Robo))
+            {
+              
+
+                Robo inimigo = Instantiate(InimigoRoboPrefab, position, Quaternion.identity).GetComponent<Robo>();
+
+               // inimigo.init();
+            }
+            if (typeof(Y) == typeof(Zumbi))
+            {
+               
+                Zumbi inimigo = Instantiate(InimigoZumbiPrefab, position, Quaternion.identity).GetComponent<Zumbi>();
+               // inimigo.init();
+            }
+            if (typeof(Y) == typeof(Abobora))
+            {
+               
+
+                Abobora inimigo = Instantiate(InimigoAboboraPrefab, position, Quaternion.identity).GetComponent<Abobora>();
+               // inimigo.init();
+            }
+        }
+            
+        
 
     }
     public void addList(Inimigo inimigo)
     {
         if (listaInimigos.Count > 0)
         {
+            inimigo.SetActive(false);
             listaInimigos.Add(inimigo);
         }
         else
         {
-            inimigo.somDeMorteDoInimigo();
-            Destroy(inimigo);
+            inimigo.somPlay(inimigo.somMorteInimigo);
+            Destroy(inimigo, inimigo.somMorteInimigo.length);
             
         }
     }
