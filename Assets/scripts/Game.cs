@@ -13,6 +13,11 @@ public class Game : MonoBehaviour
     [SerializeField]
     private float spawnarDinossauroMax;
 
+    private float spawnarCapaDeInvencibilidadeInicial;
+
+    [SerializeField]
+    private float spawnarCapaDeInvencibilidadeMax;
+
 
     private float spawnarAboboraInicial;
     [SerializeField]
@@ -34,7 +39,7 @@ public class Game : MonoBehaviour
 
 
 
-
+    public GameObject CapaDeInvencibilidadePrefab;
     public GameObject InimigoDinossauroPrefab;
     public GameObject InimigoAboboraPrefab;
     public GameObject InimigoZumbiPrefab;
@@ -63,6 +68,8 @@ public class Game : MonoBehaviour
 
     [SerializeField]
     Player[] players;
+
+
 
    
     public float Score
@@ -107,7 +114,7 @@ public class Game : MonoBehaviour
             }
         }
     }
-
+    Queue<PowerUps> poolPowerUps = new Queue<PowerUps>();
     List<Inimigo> listaInimigos = new List<Inimigo>();
 
     // Start is called before the first frame update
@@ -160,6 +167,12 @@ public class Game : MonoBehaviour
             SpawnarInimigo<Robo>(distanciaInimigoPlayer,Random.Range(0, players.Length));
         }
 
+        if (Time.time >= spawnarCapaDeInvencibilidadeInicial + spawnarCapaDeInvencibilidadeMax)
+        {
+            spawnarCapaDeInvencibilidadeInicial = Time.time;
+            spawnarCapaDeInvencibilidade(5f);
+        }
+
     }
     public void GameOver()
     {
@@ -169,6 +182,45 @@ public class Game : MonoBehaviour
     {
         return gameOver;
     }
+    public void spawnarCapaDeInvencibilidade(float distanciaDoPlayer)
+    {
+        Vector2 position = players[Random.Range(0, players.Length)].transform.position;
+        position.x += distanciaDoPlayer;
+        position.y += distanciaDoPlayer;
+
+        if (poolPowerUps.Count > 0)
+        {
+            PowerUps p = poolPowerUps.Dequeue();
+            p.transform.position = position;
+            p.gameObject.SetActive(true);
+        }
+        else
+        {
+            GameObject go = Instantiate(CapaDeInvencibilidadePrefab, position, Quaternion.identity);
+        }
+        
+
+       
+
+        
+
+
+    }
+    public void addPool(PowerUps p)
+    {
+
+        if (poolPowerUps.Count > 0)
+        {
+            poolPowerUps.Enqueue(p);
+            p.gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(p.gameObject);
+        }
+    }
+
+
     public void SpawnarInimigo<Y>(float distanciaInimigoPlayer, int indexPlayer)
     {
         if (!typeof(Y).IsSubclassOf(typeof(Inimigo)) || (indexPlayer < 0 || indexPlayer >= players.Length))
@@ -282,10 +334,11 @@ public class Game : MonoBehaviour
         else
         {
             inimigo.somPlay(inimigo.somMorteInimigo);
-            Destroy(inimigo, inimigo.somMorteInimigo.length);
+            Destroy(inimigo.gameObject, inimigo.somMorteInimigo.length);
             
         }
     }
+
 
 }
 

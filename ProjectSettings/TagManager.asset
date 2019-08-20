@@ -71,3 +71,9 @@ TagManager:
   - name: Inimigo Zumbi
     uniqueID: 3035697441
     locked: 0
+  - name: BG
+    uniqueID: 760097971
+    locked: 0
+  - name: Capa De Invencibilidade
+    uniqueID: 3186118719
+    locked: 0

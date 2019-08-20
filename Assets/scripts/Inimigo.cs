@@ -48,6 +48,7 @@ public class Inimigo : MonoBehaviour
         {
             players[i] = playerGO[i].GetComponent<Player>();
         }
+
         definirAlvo();
     }
     // Update is called once per frame
@@ -74,11 +75,11 @@ public class Inimigo : MonoBehaviour
            
             int idx = Random.Range(0, players.Length);
 
-            if (idx < 0 && idx >= players.Length)
+            if (idx <= 0 && idx >= players.Length)
             {
                 idx = 0;
             }
-                if (idx > 0 && idx < players.Length)
+                if (idx >= 0 && idx < players.Length)
             {
                 target = players[idx].transform; //aqui sorteia qual vai ser o alvo, player1 ou player2? sim
 
@@ -91,6 +92,7 @@ public class Inimigo : MonoBehaviour
     }
     public virtual void CausarDano(Player alvo)
     {
+        if(!alvo.isInvencivel())
         alvo.TomarDano((int)strength);
     }
     public void somPlay(AudioClip som)
@@ -101,6 +103,8 @@ public class Inimigo : MonoBehaviour
     public void addPool()
     {
         game_ref.addList(this);
+
+
     } 
 
 

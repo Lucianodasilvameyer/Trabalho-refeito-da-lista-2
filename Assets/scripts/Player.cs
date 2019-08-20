@@ -221,7 +221,10 @@ public class Player : MonoBehaviour
 
 
 
-
+    public bool isInvencivel()
+    {
+        return invencivel;
+    }
 
     public void SpawnarProjetil(float distanciaShurikenPlayer)
     {
@@ -230,7 +233,8 @@ public class Player : MonoBehaviour
         position.x += distanciaShurikenPlayer;
         position.z = -1f;
 
-        GameObject fit = Instantiate(projetilPrefab, transform.position, Quaternion.identity);
+        if(projetilPrefab && projetilPrefab != null)
+       Instantiate(projetilPrefab, transform.position, Quaternion.identity);
     }
 
 
@@ -242,15 +246,7 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (collision.CompareTag("Inimigo"))
-        {
-            if (!invencivel)
-                collision.GetComponent<Inimigo>().CausarDano(this);
-
-            Destroy(collision.gameObject);
-
-
-        }
+        
         if (collision.CompareTag("CapaDeInvencibilidade"))
         {
             if (invencivel == false)
@@ -258,6 +254,8 @@ public class Player : MonoBehaviour
 
                 InvencibilidadeInicial = Time.time;//colocar aqui pq tem q começar a contar no momento q pegou
                 toggleInvencibilidade();
+
+                game_ref.addPool(collision.GetComponent<PowerUps>());
             }
         }
 

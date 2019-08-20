@@ -29,5 +29,7 @@ public class Dinossauro : Inimigo
             CausarDano(collision.GetComponent<Player>());
             addPool();
         }
+
+
     }
 }

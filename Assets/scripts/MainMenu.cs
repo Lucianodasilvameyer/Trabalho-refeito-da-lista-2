@@ -7,8 +7,13 @@ public class MainMenu : MonoBehaviour
 {
    public void playGame()
    {
-        SceneManager.LoadScene("Fase1");   
+        SceneManager.LoadScene("Fase2");   
    }
+   public void playGame2()
+    {
+        SceneManager.LoadScene("Fase1");
+    }
+   
    public void quit()
    {
         Debug.Log("Saiu");
