@@ -24,9 +24,9 @@ public class Projetil : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoverShuriken();
+        MoverProjetil();
     }
-    public void MoverShuriken()
+    public void MoverProjetil()
     {
         Vector2 Input = new Vector2(1, 0);
         Vector2 Direction = Input.normalized;

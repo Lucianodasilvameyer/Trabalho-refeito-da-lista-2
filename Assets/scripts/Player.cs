@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (recarregar == false && Input.GetKeyDown(KeyCode.Keypad7) && game_ref.isGameOver() == false)
+            if (recarregar == false && Input.GetKeyDown(KeyCode.P) && game_ref.isGameOver() == false)
             {
                 SpawnarProjetil(distanciaProjetilPlayer);
                 recarregar = true;

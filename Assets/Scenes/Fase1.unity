@@ -674,9 +674,9 @@ MonoBehaviour:
   InimigoRoboPrefab: {fileID: 567803786639932496, guid: 65eb475a32c54df4c9a73079def6e7a9,
     type: 3}
   gameOvertext: {fileID: 1046878002}
-  taxaDePontos: 0
+  taxaDePontos: 2
   pontuacaoInicio: 0
-  pontuacaoMax: 0
+  pontuacaoMax: 2
   textoPontuacao: {fileID: 1027715553}
   textoPontuacao2: {fileID: 1250180472}
   players: []
@@ -1209,7 +1209,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 16.497866, w: 0}
+  m_margin: {x: 4.764592, y: -6.352837, z: -23.096079, w: 50.822353}
   m_textInfo:
     textComponent: {fileID: 1027715553}
     characterCount: 9
@@ -1259,8 +1259,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -137.5, y: 130}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -121.4, y: 67.4}
+  m_SizeDelta: {x: 223.82, y: 85.663}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1046877999
 GameObject:
@@ -1525,7 +1525,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: -13.988438, z: 0, w: 44.46952}
   m_textInfo:
     textComponent: {fileID: 1250180472}
     characterCount: 9
@@ -1575,8 +1575,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 34.6, y: 129}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -15.2, y: 64.9}
+  m_SizeDelta: {x: 223.82, y: 85.663}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1390655028
 GameObject:
@@ -1768,7 +1768,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 35.7, y: 108.3}
+  m_AnchoredPosition: {x: -19, y: 59.3}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1612836286
@@ -2044,7 +2044,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -139.2, y: 106.8}
+  m_AnchoredPosition: {x: -125.4, y: 58.5}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2017426232
@@ -2263,6 +2263,11 @@ PrefabInstance:
       propertyPath: taxaDeCura
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3313836276811033304, guid: cb8b15c13038370488c8d21f2dda61a3,
+        type: 3}
+      propertyPath: spawnarProjetilnMax
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb8b15c13038370488c8d21f2dda61a3, type: 3}
 --- !u!1 &2104721519883096134 stripped
@@ -2450,6 +2455,11 @@ PrefabInstance:
         type: 3}
       propertyPath: taxaDeCura
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8953648334850819218, guid: 1246bdefb820b81449861dcf887307f1,
+        type: 3}
+      propertyPath: spawnarProjetilnMax
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1246bdefb820b81449861dcf887307f1, type: 3}

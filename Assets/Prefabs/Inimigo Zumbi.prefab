@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f37ce4a856eca8459ce1d6f5ace4d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 913383344072842104}
   somMorteInimigo: {fileID: 8300000, guid: 423017d00c638b84eb736467289f6363, type: 3}
   speed: 2
   distanciaPlayer: 15
