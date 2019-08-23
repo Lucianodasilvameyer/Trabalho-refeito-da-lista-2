@@ -67,7 +67,7 @@ public class Game : MonoBehaviour
     bool gameOver = false;
 
     [SerializeField]
-    Player[] players;
+    Player[] players;//se define o numero de player no inspector
 
 
 
@@ -154,17 +154,17 @@ public class Game : MonoBehaviour
         if (Time.time>= spawnarAboboraInicial + spawnarAboboraMax)
         {
             spawnarAboboraInicial = Time.time;
-            SpawnarInimigo<Abobora>(distanciaInimigoPlayer, Random.Range(0, players.Length));
+            SpawnarInimigo<Abobora>(distanciaInimigoPlayer, Random.Range(0, players.Length));//o Length é o tamanho maximo do array
         }
         if (Time.time >= spawnarZumbiInicial + spawnarZumbiMax)
         {
             spawnarZumbiInicial = Time.time;
-            SpawnarInimigo<Zumbi>(distanciaInimigoPlayer, Random.Range(0, players.Length));
-        }
-        if(Time.time >= spawnarRoboInicial+ spawnarRoboMax)
+            SpawnarInimigo<Zumbi>(distanciaInimigoPlayer, Random.Range(0, players.Length));//quando usa random range com float os valores são inclusivos, ou seja contando o primeiro e o ultimo numero
+        }                                                                                   //quando usa random range com in os valor maximo é exclusivo, ou seja não ira contar o ultimo numero
+        if (Time.time >= spawnarRoboInicial+ spawnarRoboMax)
         {
             spawnarRoboInicial = Time.time;
-            SpawnarInimigo<Robo>(distanciaInimigoPlayer,Random.Range(0, players.Length));
+            SpawnarInimigo<Robo>(distanciaInimigoPlayer,Random.Range(0, players.Length));//(0, players.Length) servem para diser q deve ir de zero ao tamanho do array, sempre usar o zero
         }
 
         if (Time.time >= spawnarCapaDeInvencibilidadeInicial + spawnarCapaDeInvencibilidadeMax)
@@ -221,7 +221,7 @@ public class Game : MonoBehaviour
     }
 
 
-    public void SpawnarInimigo<Y>(float distanciaInimigoPlayer, int indexPlayer)
+    public void SpawnarInimigo<Y>(float distanciaInimigoPlayer, int indexPlayer)//aqui o int indexplayer é o valor q sera usado no array
     {
         if (!typeof(Y).IsSubclassOf(typeof(Inimigo)) || (indexPlayer < 0 || indexPlayer >= players.Length))
             return;
@@ -240,11 +240,12 @@ public class Game : MonoBehaviour
                 if (listaInimigos.OfType<Dinossauro>().Any())
                 {
                     int index = listaInimigos.FindLastIndex(x => x.GetType() == typeof(Dinossauro));
-                    listaInimigos.RemoveAt(index);
+                   
                     Dinossauro D = (Dinossauro)listaInimigos[index];
-                   
-                   
-                    D.transform.position = position;
+                    listaInimigos.RemoveAt(index);
+
+
+                    D.transform.position = position;//aqui o segundo position é o vector 3 de cima
                     D.SetActive(true);
                 }
             }
@@ -253,8 +254,9 @@ public class Game : MonoBehaviour
                 if (listaInimigos.OfType<Robo>().Any())
                 {
                     int index = listaInimigos.FindLastIndex(x => x.GetType() == typeof(Robo));
-                    listaInimigos.RemoveAt(index);
-                    Robo D = (Robo)listaInimigos[index];
+                    Robo D = (Robo)listaInimigos[index]; //aqui tem q fazer a referencia para poder tirar da lista
+                    listaInimigos.RemoveAt(index);//aqui se colocar o listInimigos antes do Robo D, não podera achalo na lista pois ele não estará la 
+                                                  //o listaInimigos.RemoveAt(index) ja sabe q tem q tirar o robo da lista pois esta no if do robo
                     position.x += D.distanciaPlayer;
                     position.y += D.distanciaPlayer;
                     D.transform.position = position;
@@ -266,8 +268,9 @@ public class Game : MonoBehaviour
                 if (listaInimigos.OfType<Zumbi>().Any())
                 {
                     int index = listaInimigos.FindLastIndex(x => x.GetType() == typeof(Zumbi));
-                    listaInimigos.RemoveAt(index);
+                    
                     Zumbi D = (Zumbi)listaInimigos[index];
+                    listaInimigos.RemoveAt(index);
                     position.x += D.distanciaPlayer;
                     position.y += D.distanciaPlayer;
                     D.transform.position = position;
@@ -279,8 +282,9 @@ public class Game : MonoBehaviour
                 if (listaInimigos.OfType<Abobora>().Any())
                 {
                     int index = listaInimigos.FindLastIndex(x => x.GetType() == typeof(Abobora));
-                    listaInimigos.RemoveAt(index);
                     Abobora D = (Abobora)listaInimigos[index];
+                    listaInimigos.RemoveAt(index);
+                    
                     position.x += D.distanciaPlayer;
                     position.y += D.distanciaPlayer;
                     D.transform.position = position;

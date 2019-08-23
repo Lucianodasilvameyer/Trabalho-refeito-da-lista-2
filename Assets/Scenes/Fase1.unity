@@ -682,7 +682,9 @@ MonoBehaviour:
   pontuacaoMax: 2
   textoPontuacao: {fileID: 1027715553}
   textoPontuacao2: {fileID: 1250180472}
-  players: []
+  players:
+  - {fileID: 7331188814180350781}
+  - {fileID: 2104721519883096137}
 --- !u!4 &587741374
 Transform:
   m_ObjectHideFlags: 0
@@ -2326,6 +2328,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2104721519883096137 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3313836276811033304, guid: cb8b15c13038370488c8d21f2dda61a3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2104721519883096133}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104721519883096134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6513b2d7ff364494cab7021a4cc08085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7331188814180350777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2519,3 +2533,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7331188814180350781 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8953648334850819218, guid: 1246bdefb820b81449861dcf887307f1,
+    type: 3}
+  m_PrefabInstance: {fileID: 7331188814180350777}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7331188814180350778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6513b2d7ff364494cab7021a4cc08085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
